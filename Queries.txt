@@ -1,0 +1,518 @@
+1)Question
+
+Find all the topics and tasks which are thought in the month of October?
+
+Answer:
+
+db.topics.aggregate([
+  {
+    $match :{
+      date :{
+         $gte: ISODate("2020-10-01"),
+        $lt: ISODate("2020-11-01")
+      }
+    }
+  },
+  {
+    $lookup:{
+      from:"task",
+      localField:"_id",
+      foreignField: "topic_id",
+      as: "tasks"
+    }
+  }
+])
+
+Output
+
+{
+  _id: ObjectId('6923fe3e862ca7fcb5c6c05d'),
+  title: 'Functions Intro',
+  date: 2020-10-15T00:00:00.000Z,
+  tasks: [
+    {
+      _id: ObjectId('69252f2f862ca7fcb5c6c074'),
+      topic_id: ObjectId('6923fe3e862ca7fcb5c6c05d'),
+      task: 'Function Task',
+      due_date: 2020-10-17T00:00:00.000Z,
+      submitted_by: ObjectId('6923f8b0862ca7fcb5c6c043')
+    }
+  ]
+}
+
+{
+  _id: ObjectId('6923fe3e862ca7fcb5c6c05e'),
+  title: 'Array Methods',
+  date: 2020-10-16T00:00:00.000Z,
+  tasks: [
+    {
+      _id: ObjectId('69252f2f862ca7fcb5c6c075'),
+      topic_id: ObjectId('6923fe3e862ca7fcb5c6c05e'),
+      task: 'Array Methods Task',
+      due_date: 2020-10-18T00:00:00.000Z,
+      submitted_by: ObjectId('6923f8b0862ca7fcb5c6c044')
+    }
+  ]
+}
+
+{
+  _id: ObjectId('6923fe3e862ca7fcb5c6c05f'),
+  title: 'HTML Basics',
+  date: 2020-10-17T00:00:00.000Z,
+  tasks: [
+    {
+      _id: ObjectId('69252f2f862ca7fcb5c6c076'),
+      topic_id: ObjectId('6923fe3e862ca7fcb5c6c05f'),
+      task: 'HTML Basics Task',
+      due_date: 2020-10-19T00:00:00.000Z,
+      submitted_by: ObjectId('6923f8b0862ca7fcb5c6c045')
+    }
+  ]
+}
+
+{
+  _id: ObjectId('6923fe3e862ca7fcb5c6c060'),
+  title: 'MongoDB Intro',
+  date: 2020-10-18T00:00:00.000Z,
+  tasks: [
+    {
+      _id: ObjectId('69252f2f862ca7fcb5c6c077'),
+      topic_id: ObjectId('6923fe3e862ca7fcb5c6c060'),
+      task: 'MongoDB Task',
+      due_date: 2020-10-20T00:00:00.000Z,
+      submitted_by: ObjectId('6923f8b0862ca7fcb5c6c046')
+    }
+  ]
+}
+
+{
+  _id: ObjectId('6923fe3e862ca7fcb5c6c061'),
+  title: 'React Components',
+  date: 2020-10-19T00:00:00.000Z,
+  tasks: [
+    {
+      _id: ObjectId('69252f2f862ca7fcb5c6c078'),
+      topic_id: ObjectId('6923fe3e862ca7fcb5c6c061'),
+      task: 'React Task',
+      due_date: 2020-10-21T00:00:00.000Z,
+      submitted_by: ObjectId('6923f8b0862ca7fcb5c6c047')
+    }
+  ]
+}
+
+{
+  _id: ObjectId('6923fe3e862ca7fcb5c6c062'),
+  title: 'Node.js Intro',
+  date: 2020-10-20T00:00:00.000Z,
+  tasks: [
+    {
+      _id: ObjectId('69252f2f862ca7fcb5c6c079'),
+      topic_id: ObjectId('6923fe3e862ca7fcb5c6c062'),
+      task: 'Mongo DB Task',
+      due_date: 2020-10-22T00:00:00.000Z,
+      submitted_by: ObjectId('6923f8b0862ca7fcb5c6c043')
+    }
+  ]
+}
+
+2)Question
+Find all the company drives which appeared between 15 oct-2020 and 31-oct-2020
+
+Answer:
+db.companydrive.aggregate([
+  {
+    $match :{
+      date :{
+         $gte: ISODate("2020-10-15"),
+        $lte: ISODate("2020-10-31")
+      }
+    }
+  }
+ 
+]);
+
+Output:
+
+{
+  _id: ObjectId('69240409862ca7fcb5c6c06a'),
+  companyName: 'HCL',
+  date: 2020-10-18T00:00:00.000Z,
+  attended_by: [
+    ObjectId('6923f8b0862ca7fcb5c6c043'),
+    ObjectId('6923f8b0862ca7fcb5c6c044'),
+    ObjectId('6923f8b0862ca7fcb5c6c045')
+  ]
+}
+{
+  _id: ObjectId('69240409862ca7fcb5c6c06b'),
+  companyName: 'TCS',
+  date: 2020-10-20T00:00:00.000Z,
+  attended_by: [
+    ObjectId('6923f8b0862ca7fcb5c6c046'),
+    ObjectId('6923f8b0862ca7fcb5c6c047'),
+    ObjectId('6923f8b0862ca7fcb5c6c043')
+  ]
+}
+{
+  _id: ObjectId('69240409862ca7fcb5c6c06c'),
+  companyName: 'Infosys',
+  date: 2020-10-22T00:00:00.000Z,
+  attended_by: [
+    ObjectId('6923f8b0862ca7fcb5c6c044'),
+    ObjectId('6923f8b0862ca7fcb5c6c045')
+  ]
+}
+{
+  _id: ObjectId('69240409862ca7fcb5c6c06d'),
+  companyName: 'Zoho',
+  date: 2020-10-25T00:00:00.000Z,
+  attended_by: [
+    ObjectId('6923f8b0862ca7fcb5c6c043'),
+    ObjectId('6923f8b0862ca7fcb5c6c046'),
+    ObjectId('6923f8b0862ca7fcb5c6c047')
+  ]
+}
+{
+  _id: ObjectId('69240409862ca7fcb5c6c06e'),
+  companyName: 'Wipro',
+  date: 2020-10-28T00:00:00.000Z,
+  attended_by: [
+    ObjectId('6923f8b0862ca7fcb5c6c044'),
+    ObjectId('6923f8b0862ca7fcb5c6c047')
+  ]
+}
+
+3)Question
+
+Find all the company drives and students who are appeared for the placement.
+
+Answer:
+
+
+db.companydrive.aggregate([
+
+  {
+    $lookup:{
+      from:"Users",
+      localField:"attended_by",
+      foreignField: "_id",
+      as: "student_appeared_for_placement"
+    }
+  }
+])
+
+Output:
+
+{
+  _id: ObjectId('69240409862ca7fcb5c6c06a'),
+  companyName: 'HCL',
+  date: 2020-10-18T00:00:00.000Z,
+  attended_by: [
+    ObjectId('6923f8b0862ca7fcb5c6c043'),
+    ObjectId('6923f8b0862ca7fcb5c6c044'),
+    ObjectId('6923f8b0862ca7fcb5c6c045')
+  ],
+  student_appeared_for_placement: [
+    {
+      _id: ObjectId('6923f8b0862ca7fcb5c6c043'),
+      name: 'Rahin Mon',
+      email: 'rahin2903@gmail.com',
+      mentor_id: ObjectId('6923f5e4862ca7fcb5c6c040')
+    },
+    {
+      _id: ObjectId('6923f8b0862ca7fcb5c6c045'),
+      name: 'Sebin Mon',
+      email: 'sebin@gmail.com',
+      mentor_id: ObjectId('6923f5e4862ca7fcb5c6c041')
+    },
+    {
+      _id: ObjectId('6923f8b0862ca7fcb5c6c044'),
+      name: 'Sukin Mon',
+      email: 'sukin@gmail.com',
+      mentor_id: ObjectId('6923f5e4862ca7fcb5c6c040')
+    }
+  ]
+}
+
+{
+  _id: ObjectId('69240409862ca7fcb5c6c06b'),
+  companyName: 'TCS',
+  date: 2020-10-20T00:00:00.000Z,
+  attended_by: [
+    ObjectId('6923f8b0862ca7fcb5c6c046'),
+    ObjectId('6923f8b0862ca7fcb5c6c047'),
+    ObjectId('6923f8b0862ca7fcb5c6c043')
+  ],
+  student_appeared_for_placement: [
+    {
+      _id: ObjectId('6923f8b0862ca7fcb5c6c046'),
+      name: 'Kishore',
+      email: 'kishore@gmail.com',
+      mentor_id: ObjectId('6923f5e4862ca7fcb5c6c041')
+    },
+    {
+      _id: ObjectId('6923f8b0862ca7fcb5c6c043'),
+      name: 'Rahin Mon',
+      email: 'rahin2903@gmail.com',
+      mentor_id: ObjectId('6923f5e4862ca7fcb5c6c040')
+    },
+    {
+      _id: ObjectId('6923f8b0862ca7fcb5c6c047'),
+      name: 'Raja',
+      email: 'raja@gmail.com',
+      mentor_id: ObjectId('6923f62d862ca7fcb5c6c042')
+    }
+  ]
+}
+{
+  _id: ObjectId('69240409862ca7fcb5c6c06c'),
+  companyName: 'Infosys',
+  date: 2020-10-22T00:00:00.000Z,
+  attended_by: [
+    ObjectId('6923f8b0862ca7fcb5c6c044'),
+    ObjectId('6923f8b0862ca7fcb5c6c045')
+  ],
+  student_appeared_for_placement: [
+    {
+      _id: ObjectId('6923f8b0862ca7fcb5c6c044'),
+      name: 'Sukin Mon',
+      email: 'sukin@gmail.com',
+      mentor_id: ObjectId('6923f5e4862ca7fcb5c6c040')
+    },
+    {
+      _id: ObjectId('6923f8b0862ca7fcb5c6c045'),
+      name: 'Sebin Mon',
+      email: 'sebin@gmail.com',
+      mentor_id: ObjectId('6923f5e4862ca7fcb5c6c041')
+    }
+  ]
+}
+{
+  _id: ObjectId('69240409862ca7fcb5c6c06d'),
+  companyName: 'Zoho',
+  date: 2020-10-25T00:00:00.000Z,
+  attended_by: [
+    ObjectId('6923f8b0862ca7fcb5c6c043'),
+    ObjectId('6923f8b0862ca7fcb5c6c046'),
+    ObjectId('6923f8b0862ca7fcb5c6c047')
+  ],
+  student_appeared_for_placement: [
+    {
+      _id: ObjectId('6923f8b0862ca7fcb5c6c043'),
+      name: 'Rahin Mon',
+      email: 'rahin2903@gmail.com',
+      mentor_id: ObjectId('6923f5e4862ca7fcb5c6c040')
+    },
+    {
+      _id: ObjectId('6923f8b0862ca7fcb5c6c047'),
+      name: 'Raja',
+      email: 'raja@gmail.com',
+      mentor_id: ObjectId('6923f62d862ca7fcb5c6c042')
+    },
+    {
+      _id: ObjectId('6923f8b0862ca7fcb5c6c046'),
+      name: 'Kishore',
+      email: 'kishore@gmail.com',
+      mentor_id: ObjectId('6923f5e4862ca7fcb5c6c041')
+    }
+  ]
+}
+{
+  _id: ObjectId('69240409862ca7fcb5c6c06e'),
+  companyName: 'Wipro',
+  date: 2020-10-28T00:00:00.000Z,
+  attended_by: [
+    ObjectId('6923f8b0862ca7fcb5c6c044'),
+    ObjectId('6923f8b0862ca7fcb5c6c047')
+  ],
+  student_appeared_for_placement: [
+    {
+      _id: ObjectId('6923f8b0862ca7fcb5c6c047'),
+      name: 'Raja',
+      email: 'raja@gmail.com',
+      mentor_id: ObjectId('6923f62d862ca7fcb5c6c042')
+    },
+    {
+      _id: ObjectId('6923f8b0862ca7fcb5c6c044'),
+      name: 'Sukin Mon',
+      email: 'sukin@gmail.com',
+      mentor_id: ObjectId('6923f5e4862ca7fcb5c6c040')
+    }
+  ]
+}
+
+4)Question:
+Find the number of problems solved by the user in codekata
+
+Answer:
+
+db.codeKata.aggregate([
+  {
+    $group:{
+      _id:"$user_id",
+      total_sum_solved:{$sum:"$sumsolved"}
+    }
+  },
+    {
+    $lookup:{
+      from:"Users",
+      localField:"_id",
+      foreignField: "_id",
+      as: "Users"
+    }
+    },
+    {
+      $unwind:"$Users"
+    },
+  {
+    $project:{
+      _id: 0,
+      user_id: "$_id",
+      name: "$Users.name",
+      email: "$Users.email",
+      totalProblemsSolved: "$total_sum_solved"
+
+      
+    }
+  }
+    
+  
+])
+
+Output:
+
+{
+  user_id: ObjectId('6923f8b0862ca7fcb5c6c044'),
+  name: 'Sukin Mon',
+  email: 'sukin@gmail.com',
+  totalProblemsSolved: 90
+}
+{
+  user_id: ObjectId('6923f8b0862ca7fcb5c6c043'),
+  name: 'Rahin Mon',
+  email: 'rahin2903@gmail.com',
+  totalProblemsSolved: 50
+}
+{
+  user_id: ObjectId('6923f8b0862ca7fcb5c6c045'),
+  name: 'Sebin Mon',
+  email: 'sebin@gmail.com',
+  totalProblemsSolved: 35
+}
+{
+  user_id: ObjectId('6923f8b0862ca7fcb5c6c047'),
+  name: 'Raja',
+  email: 'raja@gmail.com',
+  totalProblemsSolved: 65
+}
+{
+  user_id: ObjectId('6923f8b0862ca7fcb5c6c046'),
+  name: 'Kishore',
+  email: 'kishore@gmail.com',
+  totalProblemsSolved: 120
+}
+
+5)Question:
+Find all the mentors with who has the mentee's count more than 15:
+
+Answer:
+
+db.Users.aggregate([
+  {
+    $group: {
+      _id: "$mentor_id",      
+      menteeCount: { $sum: 1 }
+    }
+  },
+  {
+    $match: {
+      menteeCount: { $gt: 15 }   
+    }
+  },
+  {
+    $lookup: {
+      from: "Mentor",
+      localField: "_id",
+      foreignField: "_id",
+      as: "mentor"
+    }
+  },
+  { $unwind: "$mentor" },
+  {
+    $project: {
+      _id: 0,
+      mentor_id: "$_id",
+      mentorName: "$mentor.name",
+      menteeCount: 1
+    }
+  }
+]);
+
+Output:
+
+// This query returns mentors who have more than 15 mentees.
+// In this dataset no mentor crosses 15 students
+
+
+
+6)Question:
+Find the number of users who are absent and task is not submitted  between 15 oct-2020 and 31-oct-2020
+
+Answer:
+db.attendence.aggregate([
+  {
+    $match: {
+      status: "absent",
+      date: {
+        $gte: ISODate("2020-10-15"),
+        $lte: ISODate("2020-10-31")
+      }
+    }
+  },
+  {
+    $lookup: {
+      from: "task",
+      localField: "user_id",
+      foreignField: "submitted_by",
+      as: "tasks"
+    }
+  },
+  {
+    $match: {
+      tasks: { $size: 0 }
+    }
+  },
+  {
+    $lookup: {
+      from: "Users",
+      localField: "user_id",
+      foreignField: "_id",
+      as: "user"
+    }
+  },
+  {
+    $unwind: "$user"
+  },
+  {
+    $project: {
+      _id: 0,
+      user_id: "$user_id",
+      name: "$user.name",
+      email: "$user.email",
+      absent_date: "$date"
+    }
+  }
+]);
+
+Output:
+
+{
+  user_id: ObjectId('692d30dabed108302eb484d4'),
+  name: 'raghul',
+  email: 'raghul@gmail.com',
+  absent_date: 2020-10-20T00:00:00.000Z
+}
+
+// This single student was absent and did not submit any task.
+// I added this user separately because all other absent users
+// had already submitted at least one task.
